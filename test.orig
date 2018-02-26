@@ -2,14 +2,17 @@ hello word
 hello word2
 hello word3
 
-<<<<<<< HEAD
 master add 2
 fix_bug add
 
 hello word4
 hello word5
+<<<<<<< HEAD
 hello word6
-=======
+
 hello word7
 hello word8
->>>>>>> b1
+=======
+
+hello word7
+>>>>>>> 0441905f1fe79a9cc12abbc9ea021dd548d8d2cd
