@@ -1,5 +1,7 @@
-#iris常用运维处理
+#   iris常用运维处理
+
 [TOC]
+
 ##   1. 增加Topic
 *   进入*iris_manager* 所在的部署目录 */home/work/services/iris-manager/client/conf*
 *   找到配置文件 *route_config.xml*
