@@ -1,15 +1,18 @@
 #   iris常用运维处理
 
-[TOC]
+[1.增加Topic](#1-增加topic)
+[2.增加消费者](#2-增加消费者) 
+[3.增加Topic](#3-重新给某个消费者推送流水-方法1) 
+[4.增加Topic](#4-重新给某个消费者推送流水-方法2推荐使用) 
+[5.增加Topic](#5-单聊和群聊的消息流水分析工具) 
 
-##   1. 增加Topic
+##   1.增加Topic
 *   进入*iris_manager* 所在的部署目录 */home/work/services/iris-manager/client/conf*
 *   找到配置文件 *route_config.xml*
 *   其配置文件描述如下:
   ```xml
-  <?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <route version="1234">
-    <!-- all route定义 -->
     <topics>
         <topic id="1093" sub_hash_cnt="2" writer_log_prefix="new_miliao_follow_">
             <shard begin="0" end="1000" ip="172.28.0.9" port="9402" status="0" />
@@ -194,6 +197,7 @@ root     30164 30160  0  2018 ?        18:40:30 502862_CHILD_notify_server
 -rw------- 1 root root 24 4月  25 10:04 work502958.pos
 -rw------- 1 root root 24 4月  25 10:03 work502959.pos
 ```
+
 *    修改这些推送进程的pos位置信息，然后重启*notify_server*。
 *    **如何修改pos文件的方法**? 进入fk4下的*/data/iris_tools*，利用工具*iris_pos*来进行修改，*iris_pos*可以查看pos文件信息，也可以修改pos文件信息。
 ```shell
@@ -205,8 +209,9 @@ root     30164 30160  0  2018 ?        18:40:30 502862_CHILD_notify_server
   current: 2019-04-25 10:00:00 @7524
   base:    2019-04-25 10:00:00 @7524
 ```
+
 *   **注意pos文件是按时间来标识的，最小单位是小时**，比如可以把pos设置到2018-09-04 10:00。
-*   
+  
 ##   4. 重新给某个消费者推送流水-方法2(推荐使用)
 *   进入fk4下的*/data/iris_tools*，利用工具iris来进行推送。
 *   iris工具的使用方法:
@@ -215,10 +220,12 @@ root     30164 30160  0  2018 ?        18:40:30 502862_CHILD_notify_server
 usage
 	./iris filename host port topic
 ```
+
 *   指定流水文件路径及*topic_id*，推送的目标IP/PORT。目前iris的流水都是一个小时一个文件，可以把需要重放的流水文件拷贝到过来，然后一一推送。
 
 ## 5. 单聊和群聊的消息流水分析工具
 *   单聊消息流水分析工具*iris-chat*
+
 ```shell
 [root@bsy-fk4 iris_tools]# ./iris-chat //home/work/MISTORE/writer_bill_9402/1090/1/new_miliao_chat_msg_20190425_10.bill |head -n 100
 from: 1001409
@@ -257,4 +264,5 @@ msg_status: 0
 from_appid: 10004
 13: 1085
 ```
+
 *   群聊消息流水分析工具*iris-group*，类似单聊流水分析工具。
